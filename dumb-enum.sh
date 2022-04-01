@@ -33,7 +33,7 @@ echo $green && echo '## Active Processes ##'
 echo $reset
 
         ps aux | grep root && echo ''
-        ps -ef -forest
+        ps -ef --forest
 
 echo $green && echo '## Linux Sockets ##'
 
