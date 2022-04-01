@@ -48,6 +48,18 @@ elif [ -z "$check_netstat"]; then
 else
         ss -tulpn
 fi
+echo $green && echo "## Enumerating DNS..."
+echo $reset
+echo "## Checking hosts file for adresses...."
+echo $green && echo "Full host list below..."
+echo $reset
+cat /etc/hosts | grep -v 127.*
+
+
+echo $green && echo "## Checking for local 192. DNS addresses"
+echo $reset
+echo $red && cat /etc/hosts | grep 192.*
+
 echo $green && echo '## Crontab ##\n'
 echo $reset
 
@@ -98,5 +110,23 @@ echo $reset
 echo  $green && echo "## double check opt since everyone ##"
 echo $reset
         ls -al /opt
+touch info.txt
+#leaves just the versioning numbers
+strip_ver=$(echo "${kern}" | sed 's/[^0-9.]//g' | awk '{ print substr($0,1,length($0)-3 )}')
+
+
+echo $strip_ver >> info.txt
+
+
+echo $green && echo "## checking kernel version for CVE-2022-0847 AKA Dirty Pipe"
+#logic to check if version is vulnerable.
+if grep -q "5.8.0" info.txt ;then
+	echo $red && "Machine Might Be Vulnerable to Dirty Pipe" && rm info.txt;
+
+else
+	echo $green && echo "Not vulnerable to Dirty Pipe Vuln" && rm info.txt;
+	echo $reset
+
+fi
 
 exit 
