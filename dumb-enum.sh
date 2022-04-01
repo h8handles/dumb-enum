@@ -43,7 +43,7 @@ check_ss=$(which ss)
 if [ -z "$check_ss" ]; then
 echo "ss not found trying netstat..."
         netstat -antup && netstat -tulpn
-elif [ -z "$check_netstat"]; then
+elif [ -z "$check_netstat" ]; then
         echo "netstat is also not found no socket info..."
 else
         ss -tulpn
@@ -70,7 +70,7 @@ echo $green && echo '## Readable // Writable Files ##'
 echo $reset
 
 check_find=$(which find)
-if [ -z "$check_find"]; then
+if [ -z "$check_find" ]; then
         echo "find command is not installed. running through simple checks"
         ls -al /etc/passwd
         ls -al /etc/shadow
